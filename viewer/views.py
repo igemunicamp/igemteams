@@ -55,6 +55,8 @@ def projects(request):
             projects_list = projects_list.exclude(nominations = "-")
         if request.GET.get('section'):
             projects_list = projects_list.filter(section__icontains= request.GET.get('section'))
+        if request.GET.get('track'):
+            projects_list = projects_list.filter(track__icontains= request.GET.get('track'))
         form = SearchForm(initial=request.GET)
         context = {'projects_list': projects_list, 'form':form}
 
