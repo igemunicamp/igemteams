@@ -25,7 +25,7 @@ SECRET_KEY = '1u$vb+)*)erg^x!t1%xuu^u_=7isxu@-ehp&a%-oh9@)82xh@m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['igemunicamp.pythonanywhere.com']
 
 
 # Application definition
