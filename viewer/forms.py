@@ -11,3 +11,10 @@ class SearchForm(forms.Form):
     awards = forms.BooleanField(required=False)
     nominations = forms.BooleanField(required=False)
     section = forms.ChoiceField(required=False, choices=(('',''),('overgrad','Overgrad'),('undergrad','Undergrad'),('highschool', 'High School')))
+
+
+
+class InstitutionForm(forms.Form):
+    year = forms.CharField(label='Choose a year', max_length=100,required=False)
+    location = forms.CharField(label='Choose a country', max_length=100,required=False)
+    participations = forms.CharField(label='Number of participations', max_length=100,required=False)

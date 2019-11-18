@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    
+
+    <title>Search iGEM</title>
+  </head>
+  <body>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-3" id="sidebar">
+			<form method="post">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Submit">
+            </form>
+          </div>
+          <div class="col-sm-9" id="content">
+				<table id="table" data-toggle="table" data-toolbar=".toolbar" data-sortable="true">
+                    <thead>
+                    <tr>
+                      <th data-field = "id" data-sortable="true">Institution</th>
+                      <th data-field = "id1" data-sortable="true"> # </th>
+                      <th data-field = "id2" data-sortable="true"> Location </th>
+                      <th data-field = "id3" data-sortable="true"> UG </th>
+                      <th data-field = "id4" data-sortable="true"> OG </th>
+                      <th data-field = "id5" data-sortable="true"> G </th>
+                      <th data-field = "id6" data-sortable="true"> S </th>
+                      <th data-field = "id7" data-sortable="true"> B </th>
+                      <th data-field = "id8" data-sortable="true"> Awd</th>
+                      <th data-field = "id9" data-sortable="true"> Nom </th>
+                    </tr>
+                    </thead>
+                  <tbody>
+          {% for institution, institution_dict in projects_list.items %}
+                       <tr>
+                       <td><a href="/?institution={{institution}}"> {{institution}} </a></td> 
+                   		{% for key, value in institution_dict.location.items %}
+                   		 <td> {{value}}  </td>
+                        <td> {{key}}  </td>
+                        {% endfor %}
+                        <td> {{institution_dict.section.Undergrad}}  </td>
+                        <td> {{institution_dict.section.Overgrad}}  </td>
+                        <td> {{institution_dict.medal.Gold}}  </td>
+                        <td> {{institution_dict.medal.Silver}}  </td>
+                        <td> {{institution_dict.medal.Bronze}}  </td>
+                        <td> {{institution_dict.awards.total}} </td>
+                        <td> {{institution_dict.nominations.total}} </td>
+                       </tr>
+                  {% endfor %}
+                    </tbody>
+                </table>
+          </div>
+         
+        </div>
+      </div>
+
+
+		
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
+  </body>
+</html>
+	

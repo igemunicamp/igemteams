@@ -8,9 +8,15 @@ from django.urls import reverse
 
 # Create your views here.
 
-from .forms import SearchForm
+from .forms import SearchForm, InstitutionForm
 
 from .models import Project
+
+from collections import Counter
+
+
+def index(request):
+    return render(request, 'viewer/index.html')
 
 
 
@@ -40,7 +46,7 @@ def projects(request):
         if request.GET.get('year'):
              projects_list = projects_list.filter(year=request.GET.get('year'))
         if request.GET.get('country'):
-            projects_list = projects_list.filter(location = request.GET.get('country'))
+            projects_list = projects_list.filter(location__icontains = request.GET.get('country'))
         if request.GET.get('medal'):
             projects_list = projects_list.filter(medal__icontains = request.GET.get('medal'))
         if request.GET.get('keyword'):
@@ -70,3 +76,59 @@ def detail(request,project_pk):
     return render(request, 'viewer/detail.html', context)
 
 
+def teams(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = InstitutionForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            query_filters = []
+            for filter_key in form.cleaned_data:
+                if form.cleaned_data[filter_key]:
+                    query_filters.append(''+ filter_key + '=' + str(form.cleaned_data[filter_key]))
+            
+            query_string = '?' + '&'.join(query_filters)
+            return redirect(reverse('teams_all') + query_string)
+    
+    else:        
+        institution_list = Project.objects.values_list('institution', flat=True).distinct()
+        participation = 1
+        year = 2004
+        projects_all = Project.objects.all()
+        if request.GET.get('participations'):
+            participation = int(request.GET.get('participations'))
+        if request.GET.get('year'):
+            year = int(request.GET.get('year'))
+            projects_all = projects_all.filter(year__gte = year)
+        if request.GET.get('location'):
+            location = request.GET.get('location')
+            projects_all = projects_all.filter(location__icontains = location)
+        #countries_list = [x for x in countries_list]
+        projects_list = {}
+        for institution in institution_list:
+            institution_dict = {}
+            projects_institution = projects_all.filter(institution = institution).exclude(section = 'High School')
+            if projects_institution.count() >= participation:
+                params = ['location', 'section', 'medal','awards','nominations']
+                for p in params:
+                    projects_p = projects_institution.values_list(p, flat=True)
+                    projects_p = [y for x in projects_p for y in x.split(',')]
+                    projects_p = {x:projects_p.count(x) for x in projects_p}
+                    institution_dict[p] = projects_p
+                institution_dict['awards'].pop('-', None)
+                institution_dict['awards'].pop('', None)
+                institution_dict['awards']['total'] = len(institution_dict['awards'])
+                institution_dict['nominations'].pop('-', None)
+                institution_dict['nominations'].pop('', None)
+                institution_dict['nominations']['total'] = len(institution_dict['nominations'])
+                country =  max(institution_dict['location'], key=institution_dict['location'].get)
+                institution_dict['location'] = {country:institution_dict['location'][country]}
+                projects_list[institution] = institution_dict
+            
+    form = InstitutionForm(initial=request.GET)
+    context = {'projects_list': projects_list, 'form':form}
+    return render(request, 'viewer/teams.html', context)

@@ -4,5 +4,6 @@ from . import views
 
 urlpatterns = [
     re_path(r'^$', views.projects, name='projects_all'),
-    path('projects/id/<int:project_pk>', views.detail, name='project_details')
+    path('id/<int:project_pk>', views.detail, name='project_details'),
+    re_path(r'^teams/$', views.teams, name='teams_all')
     ]
