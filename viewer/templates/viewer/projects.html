@@ -12,9 +12,29 @@
   </head>
   <body>
       <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="#">iGEM DB</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="/">Projects</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/teams">Institutions</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/locations">Locations</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
         <div class="row">
-          <div class="col-sm-3" id="sidebar">
-              <form method="post">
+                  <div class="col-sm-3" id="sidebar">
+      <form method="post">
                 {% csrf_token %}
                 {{ form }}
                 <input type="submit" value="Submit">
@@ -65,13 +85,7 @@
                     <p>No list available.</p>
                 {% endif %}
 
-          </div>
-         
-        </div>
-      </div>
-
-
-		
+          </div>	
 
 
     <!-- Optional JavaScript -->

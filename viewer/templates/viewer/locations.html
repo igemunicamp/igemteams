@@ -15,8 +15,7 @@
   </head>
   <body>
       <div class="container">
-
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+              <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <a class="navbar-brand" href="#">iGEM DB</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -36,8 +35,6 @@
             </ul>
           </div>
         </nav>
-
-
         <div class="row">
           <div class="col-sm-3" id="sidebar">
 			<form method="post">
@@ -50,9 +47,8 @@
 				<table id="table" data-toggle="table" data-toolbar=".toolbar" data-sortable="true">
                     <thead>
                     <tr>
-                      <th data-field = "id" data-sortable="true">Institution</th>
-                      <th data-field = "id1" data-sortable="true"> # </th>
                       <th data-field = "id2" data-sortable="true"> Location </th>
+                      <th data-field = "id1" data-sortable="true"> # </th>
                       <th data-field = "id3" data-sortable="true"> UG </th>
                       <th data-field = "id4" data-sortable="true"> OG </th>
                       <th data-field = "id5" data-sortable="true"> G </th>
@@ -63,13 +59,10 @@
                     </tr>
                     </thead>
                   <tbody>
-          {% for institution, institution_dict in projects_list.items %}
+          {% for location, institution_dict in projects_list.items %}
                        <tr>
-                       <td><a href="/?institution={{institution}}"> {{institution}} </a></td> 
-                   		{% for key, value in institution_dict.location.items %}
-                   		 <td> {{value}}  </td>
-                        <td> {{key}}  </td>
-                        {% endfor %}
+                       <td> {{location}} </td> 
+                   		 <td> {{institution_dict.count}} </td>
                         <td> {{institution_dict.section.Undergrad}}  </td>
                         <td> {{institution_dict.section.Overgrad}}  </td>
                         <td> {{institution_dict.medal.Gold}}  </td>

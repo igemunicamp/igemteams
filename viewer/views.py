@@ -132,3 +132,60 @@ def teams(request):
     form = InstitutionForm(initial=request.GET)
     context = {'projects_list': projects_list, 'form':form}
     return render(request, 'viewer/teams.html', context)
+
+
+def locations(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = InstitutionForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            query_filters = []
+            for filter_key in form.cleaned_data:
+                if form.cleaned_data[filter_key]:
+                    query_filters.append(''+ filter_key + '=' + str(form.cleaned_data[filter_key]))
+            
+            query_string = '?' + '&'.join(query_filters)
+            return redirect(reverse('locations_all') + query_string)
+
+    else:        
+        location_list = Project.objects.values_list('location', flat=True).distinct()
+        participation = 1
+        year = 2004
+        projects_all = Project.objects.all()
+        if request.GET.get('participations'):
+            participation = int(request.GET.get('participations'))
+        if request.GET.get('year'):
+            year = int(request.GET.get('year'))
+            projects_all = projects_all.filter(year__gte = year)
+        if request.GET.get('location'):
+            location = request.GET.get('location')
+            projects_all = projects_all.filter(location__icontains = location)
+        #countries_list = [x for x in countries_list]
+        projects_list = {}
+        for location in location_list:
+            institution_dict = {}
+            projects_institution = projects_all.filter(location = location).exclude(section = 'High School')
+            if projects_institution.count() >= participation:
+                params = ['section', 'medal','awards','nominations']
+                for p in params:
+                    projects_p = projects_institution.values_list(p, flat=True)
+                    projects_p = [y for x in projects_p for y in x.split(',')]
+                    projects_p = {x:projects_p.count(x) for x in projects_p}
+                    institution_dict[p] = projects_p
+                institution_dict['awards'].pop('-', None)
+                institution_dict['awards'].pop('', None)
+                institution_dict['awards']['total'] = len(institution_dict['awards'])
+                institution_dict['nominations'].pop('-', None)
+                institution_dict['nominations'].pop('', None)
+                institution_dict['nominations']['total'] = len(institution_dict['nominations'])
+                institution_dict['count'] = projects_institution.count()
+                projects_list[location] = institution_dict
+            
+    form = InstitutionForm(initial=request.GET)
+    context = {'projects_list': projects_list, 'form':form}
+    return render(request, 'viewer/locations.html', context)
