@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <a class="navbar-brand" href="#">iGEM DB</a>
+          <a class="navbar-brand" href="/">iGEM DB</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -17,35 +17,39 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item">
-                <a class="nav-link" href="/">Projects</a>
+                <a class="nav-link" href="/projects"> Search and filter all projects </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/teams">Institutions</a>
+                <a class="nav-link" href="/teams">Numbers by Institution</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/locations">Locations</a>
+                <a class="nav-link" href="/locations">Numbers by Location</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/about"> About/Contact </a>
               </li>
             </ul>
           </div>
         </nav>
-    <title>Detail</title>
+    <title>Search iGEM</title>
   </head>
   <body>
 
           <div class="col-sm-9">
                 {% if project %}                   
-                    <p>Year: {{project.year}}</p>
                     <p>Team: {{project.team_name}}</p> 
+                    <p>Institution: {{project.institution }} </p>
+                    <p>Location: {{project.location }}</p>
+                    <p>Year: {{project.year}}</p>
                     <p>Title: {{project.project_title }}</p>
                     <p>Tracks: {{project.track}} </p> 
-                    <p>Location: {{project.location }}</p>
+                    <p> igem wiki: <a href="{{project.wiki}}"> {{project.wiki}} </a></p>
+                    <p> igem parts: <a href="{{project.parts}}"> {{project.parts}} </a></p>
                     <p>Abstract: {{project.abstract }}</p>
-                    <p>Institution: {{project.institution }} </p>
                     <p> Medal: {{project.medal}}</p>
                     <p> Nominations: {{project.nominations}}</p>
                     <p> Awards: {{project.awards}}</p>
-                    <p> igem wiki: <a href="{{project.wiki}}"> {{project.wiki}} </a></p>
-                    <p> igem parts: <a href="{{project.parts}}"> {{project.parts}} </a></p>
+
                   {% else %}
                     <p>No list available.</p>
                 {% endif %}

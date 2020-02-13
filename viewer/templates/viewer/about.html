@@ -36,53 +36,22 @@
           </div>
         </nav>
         <div class="row">
-      <form method="post">
-                {% csrf_token %}
-                {{ form }}
-                <input type="submit" value="Submit">
-            </form>
-                {% if projects_list %}
-                <table class="table table-hover">
-                    <thead class="thead-dark">
-                    <tr>
-                      <th> # </th>
-                      <th>Year</th>
-                      <th>Team Name</th> 
-                      <th>Project Title</th>
-                      <th>Track</th>
-                      <th>Location</th>
-                    </tr>
-                    </thead>
-                  <tbody>
-                    {% for project in projects_list %}
-                       <tr data-toggle="collapse" data-target="#demo{{project.pk}}" class="accordion-toggle">
 
-                    <th scope="row">{{ forloop.counter }}</th>
-                    <td>{{project.year}}</td>
-                        <td>{{project.team_name}}</td> 
-                        <td> {{project.project_title }}</td>
-                        <td> {{project.track }}</td>
-                        <td>{{project.location }}</td>
-                       </tr>
-                        <tr >
-                        <td colspan="6" class="hiddenRow">
-                          <div class="accordian-body collapse" id="demo{{project.pk}}"> 
-                            <p>Abstract: {{project.abstract }}</p>
-                            <p>Institution: {{project.institution }} </p>
-                            <p> Nominations: {{project.nominations}}</p>
-                            <p> Medal: {{project.medal}}</p>
-                            <p> Awards: {{project.awards}}</p>
-                            <p> Section: {{project.section}}</p>
-                            <a href="id/{{project.pk}}">Details</a></td>
+        	<div class="col-sm-12">
 
-                        </td>
-                    </tr>
-                  {% endfor %}
-                    </tbody>
-                </table>
-                    {% else %}
-                    <p>No list available.</p>
-                {% endif %}
+        	<p> This is an independent project developed to help the iGEM community. </p>
+
+        	<p> This content is neither created nor endorsed by the iGEM Foundation. </p>
+
+			<p> Github : <a href="https://github.com/igemunicamp/igemteams"> https://github.com/igemunicamp/igemteams </a> </p>
+
+			<p> If you have found a bug or have any suggestion, please fill the form below.</p>
+
+			<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdb5pbFxUhag_m_DxqCperV7Jco-YSWxufI0coa0TRqZnIZ_w/viewform?embedded=true" width="640" height="611" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+
+			</div>
+
+          </div>
 
           </div>	
 

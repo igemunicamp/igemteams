@@ -13,6 +13,8 @@ class SearchForm(forms.Form):
     section = forms.ChoiceField(required=False, choices=(('',''),('overgrad','Overgrad'),('undergrad','Undergrad'),('highschool', 'High School')))
 
 
+class KeywordForm(forms.Form):
+    keyword = forms.CharField(label='Choose a keyword',max_length=20,required=False)
 
 class InstitutionForm(forms.Form):
     year = forms.CharField(label='Choose a year', max_length=100,required=False)
